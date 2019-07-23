@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:10.4
+#    container_name: postgres-myproject
+    ports:
+      - "5432:5432"
+
+  # myproject
+  web:
+    build: .
+#    container_name: myproject
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+#    tty: true
+
+
+#  db:
+#    image: postgres:10.4
+#    container_name: postgres-myproject
+#    ports:
+#      - "5432:5432"
+#
+#  # myproject
+#  web:
+#    build: .
+#    container_name: myproject
+#    links:
+#      - db:postgres-myproject
+#    ports:
+#      - "8000:8000"
+#    command: python3 manage.py runserver 0.0.0.0:8000
+#    volumes:
+#      - .:/code
+#    tty: true
